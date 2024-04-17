@@ -14,9 +14,20 @@ class MusicCpu{
 		int n_sample;
 		int n_source;
 		double *array_geometry;
+		// general recevied signal equation
+		// x(t) = As(t) + n(t)
+		// x(t) -> M x 1 vector received signal
+		// s(t) -> D x 1 vector of source signal
+		// n(t) -> M x 1 vector of noise signal
+		// A -> M x D steering vector
+		std::complex<double> *A;
+		std::complex<double> st;
+		std::complex<double> nt;
+		std::complex<double> xt;
 
 	public:
 		MusicCpu(){
+			//TODO
 		}
 		int matrix_mul(std::complex<double> *A, std::complex<double> *B, std::complex<double> *C, dim3 dimsA, dim3 dimsB){
 			if(dimsA.x != dimsB.y){
