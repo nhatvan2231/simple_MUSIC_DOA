@@ -30,6 +30,10 @@ class MusicCpu{
 
 		std::complex<double> *xt_cov; 
 
+		std::complex<double> e_value;
+		std::complex<double> e_vector;
+
+
 		int matrix_mul(std::complex<double> *srcA,
 			 						std::complex<double> *srcB, 
 									int M_A, int N_A, 
@@ -64,54 +68,88 @@ class MusicCpu{
 			std::complex<double> *srcT = (std::complex<double> *)malloc(N * M);
 			conj_transpose(src, M, N, dst);
 			matrix_mul(src, srcT, M, N, N, M, dst);
-			}
+			return 0;
 		}
+
+		// compute eigen value
+		int comp_eigen_value(){
+			//TODO
+			return 0;
+		}
+
+		// compute eigen vector
+		int comp_eigen_vector(){
+			//TODO
+			return 0;
+		}
+
+		// sort the eigen value and vector from ascending order
+		// The first D eigen values/vectors is the source subspace
+		// The D+1 eigen values/vectors is the noise subspace or nullspace
+		int sort_eigen(){
+			//TODO
+			return 0;
+		}
+
+		int comp_steering_vector(){
+			//TODO
+			int n_sample = 1000;
+			const double theta = 2*M_PI/n_sample;
+			A = (std::complex<double> *)malloc(n_sample * n_array);
+			for(int i=0; i<n_sample; ++i){ //n_sample by n_array matrix
+				for(int j=0; j<n_array; ++j){
+					A[i*n_array+j] = exp(-2 * im * M_PI * array_geometry[j] * sin(theta*i-M_PI));
+				}
+			}
+			return 0;
+		}
+
+		int comp_noise_subspace(){
+			int n_noise = n_array - n_source;
+			nt = (std::complex<double> *)malloc(n_array * n_noise);
+			for(int i = 0; i < n_noise; ++i){
+				for(int j=0; j<n_array; ++j){
+					nt[j*n_noise + i] = e_vector[j*n_noise + i];
+				}
+			}
+			return 0;
+		}
+
+		int comp_metric(){
+			return 0;
+		}
+
 
 	public:
 		MusicCpu(){
 			//TODO
 		}
 
+
 		int array_geometry(){
 			//TODO
 			for(int i=0; i<n_array: ++i){
 				ar_geometry[i] = i*d;
+				printf("Array %d is %fm from ref array 0\n", i, ar_geometry[i]);
 			}
 			return 0;
 		};
 
-		int steering_vector(std::complex<double> *sv, int n_array, int n_sample, double *array_geometry){
-			//TODO
-			const double theta = 2*M_PI/n_sample;
-			for(int i=0; i<n_sample; ++i){ //n_sample by n_array matrix
-				for(int j=0; j<n_array; ++j){
-					sv[i*n_array+j] = exp(-2 * im * M_PI * array_geometry[j] * sin(theta*i));
-				}
-			}
+
+		int music_core(){
+			comp_eigen_value();
+			comp_eigen_vector();
+			sort_eigen();
+			comp_noise_subspace();
+			comp_steering_vector();
+
 			return 0;
 		}
-
-
-		int eigen_wv(){
-		}
-		int music_core();
 
 		// simulate a 2D sinusoidal signal
 		int source_generator(double theta, double fre_tone, int sample_rate, int n_sample){
 
-			//std::complex<double> tx[n_sample]; // simulate signal
-			//// simulate source signal
-			//for(int i=0; i<n_sample; ++i){
-			//	double tmp = i/sample_rate;
-			//	tx[i] = exp(2 * j * M_PI * fre_tone * tmp);
-			//}
-
 			double rad = theta * M_PI / 180; // convert theta to radians
-			//double tmp_a[n_array]; // simulate steering vector
-			//for(int i = 0; i < n_array; ++i){
-		 	//	tmp_a[i] = exp(-2 * im * M_PI * d * i * sin(theta))
-			//}
-
 			// simulate the received signal on each microphone
 			// with added noise
 			xt = (std::complex<double> *)malloc(n_array * n_sample);
