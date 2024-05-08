@@ -1,20 +1,16 @@
 #include <iostream>
+#include <complex>
 
 using namespace std;
-int test(int* &x){
-	x[0] = 1;
-	x[1] = 2;
-	return 0;
-}
 int main(){
-	int* x = (int *)malloc(sizeof(int)*2);
-	cout << x[0] << endl;
+	std::complex<double>* x = (std::complex<double> *)malloc(sizeof(std::complex<double>)*3);
+	x[0] = std::complex<double>(1,2);
+	x[1] = std::complex<double>(2,2);
+	x[2] = std::complex<double>(3,2);
+	cout << 2.0*x[0] << endl;
 	cout << x[1] << endl;
+	cout << x[2] << endl;
 
-	test(x);
-
-	cout << x[0] << endl;
-	cout << x[1] << endl;
 	free(x);
 }
 
