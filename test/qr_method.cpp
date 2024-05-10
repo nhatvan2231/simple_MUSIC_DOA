@@ -39,10 +39,10 @@ int compute_P(std::complex<double>* colA, int size, int col, std::complex<double
 
 	identity_mat(size_i, mat_i); // size of sub A
 	std::complex<double>* ai = colA + col; // column offset in pointer
-	//printf("col A\n");
-	//for(int i=0; i<size_i; ++i){
-	//	std::cout << ai[i] << std::endl;
-	//}
+	printf("col A\n");
+	for(int i=0; i<size_i; ++i){
+		std::cout << ai[i] << std::endl;
+	}
 	compute_n(ai, size_i, vec_n);
 	cov_matrix(vec_n, size_i ,1 , vec_ncov);
 	for(int i=0; i<size_i; ++i){
@@ -52,15 +52,14 @@ int compute_P(std::complex<double>* colA, int size, int col, std::complex<double
 			//mat_P[ii*size+jj] = mat_i[i*size_i+j] - (2.0 * vec_n[i*size_i+j] * conj(vec_n[j*size_i+i]));
 			mat_P[ii*size+jj] = mat_i[i*size_i+j] - (2.0 * vec_ncov[i*size_i+j]);
 		}
-		//std::cout << std::endl;
 	}
-	//printf("Compute P %d\n", col);
-	//for(int i = 0; i < size; ++i) {
-	//	for(int j = 0; j < size; ++j) {
-	//		std::cout << std::setw(25) << std::setprecision(5) << mat_P[i*size +j] << " ";
-	//	}
-	//	std::cout << std::endl;
-	//}
+	printf("Compute P %d\n", col);
+	for(int i = 0; i < size; ++i) {
+		for(int j = 0; j < size; ++j) {
+			std::cout << std::setw(25) << std::setprecision(5) << mat_P[i*size +j] << " ";
+		}
+		std::cout << std::endl;
+	}
 	free(mat_i);
 	free(vec_ncov);
 	//free(ai);
@@ -75,10 +74,11 @@ int compute_n(std::complex<double>* colA, int size, std::complex<double>* &vec_n
 	compute_u(colA, size, vec_u); // get u vector
 	double u_norm = vec_norm(vec_u, size); // get the norm of vector u
 	
-	//printf("Compute n\n");
+	printf("Compute n\n");
+	std::cout << u_norm << std::endl;
 	for(int i=0; i<size; ++i){
 		vec_n[i] = vec_u[i]/u_norm;
-		//std::cout << vec_n[i] << std::endl;
+		std::cout << vec_n[i] << std::endl;
 	}
 	free(vec_u);
 	//printf("DONE n\n");
@@ -98,10 +98,11 @@ int compute_u(std::complex<double>* colA, int size, std::complex<double>* &vec_u
 	//double vec_b[size] = {};
 	vec_b[0] = 1;
 	
+	printf("Compute u\n");
 	for(int i=0; i<size; ++i){
 		std::complex<double> tmp = sign *   A_norm * vec_b[i];
 		vec_u[i] = colA[i] - tmp;
-		//std::cout << vec_u[i] << " " << colA[i] <<  std::endl;
+		std::cout << vec_u[i] <<  std::endl;
 	}
 	//printf("DONE u\n");
 	free(vec_b);

@@ -61,15 +61,15 @@ int main(){
 		}
 		cout << endl;
 	}
-	//c_matrix[0] = std::complex<double>(0.5,0);
-	//c_matrix[1] = std::complex<double>(0.75,0);
-	//c_matrix[2] = std::complex<double>(0.5,0);
-	//c_matrix[3] = std::complex<double>(1.0,0);
-	//c_matrix[4] = std::complex<double>(0.5,0);
-	//c_matrix[5] = std::complex<double>(0.75,0);
-	//c_matrix[6] = std::complex<double>(0.25,0);
-	//c_matrix[7] = std::complex<double>(0.25,0);
-	//c_matrix[8] = std::complex<double>(0.25,0);
+	c_matrix[0] = std::complex<double>(0.5,0);
+	c_matrix[1] = std::complex<double>(0.75,0);
+	c_matrix[2] = std::complex<double>(0.5,0);
+	c_matrix[3] = std::complex<double>(1.0,0);
+	c_matrix[4] = std::complex<double>(0.5,0);
+	c_matrix[5] = std::complex<double>(0.75,0);
+	c_matrix[6] = std::complex<double>(0.25,0);
+	c_matrix[7] = std::complex<double>(0.25,0);
+	c_matrix[8] = std::complex<double>(0.25,0);
 	printf("Matrix cov\n");
 	for(int i = 0; i < M; ++i) {
 		for(int j = 0; j < M; ++j) {
