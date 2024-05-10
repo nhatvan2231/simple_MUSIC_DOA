@@ -5,7 +5,7 @@
 #include <iostream>
 #include <random>
 
-int matrix_copy(std::complex<double> *src, int M, int N, std::complex<double>* &dst);
+int matrix_copy(std::complex<double> *src, int M, int N, int offset, std::complex<double>* &dst);
 int matrix_mul(std::complex<double> *srcA,
 							std::complex<double> *srcB, 
 							int M_A, int N_A, 

@@ -3,9 +3,9 @@
 using namespace std;
 
 // copy matrix/vector
-int matrix_copy(std::complex<double> *src, int M, int N, std::complex<double>* &dst){
+int matrix_copy(std::complex<double> *src, int M, int N, int offset, std::complex<double>* &dst){
 	for(int i=0; i<M*N; ++i){
-		dst[i] = src[i];
+		dst[i + offset] = src[i];
 	}
 	return 0;
 }
@@ -70,7 +70,7 @@ int identity_mat(int size, std::complex<double>* &dst){
 
 // calculate the norm of vector
 double vec_norm(std::complex<double> *src, int size){
-	double result;
+	double result=0;
 	for(int i=0; i<size; ++i){
 		result += norm(src[i]);
 	}

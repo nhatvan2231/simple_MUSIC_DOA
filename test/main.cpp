@@ -61,34 +61,26 @@ int main(){
 		}
 		cout << endl;
 	}
-	c_matrix[0] = std::complex<double>(0.5,0);
-	c_matrix[1] = std::complex<double>(0.75,0);
-	c_matrix[2] = std::complex<double>(0.5,0);
-	c_matrix[3] = std::complex<double>(1.0,0);
-	c_matrix[4] = std::complex<double>(0.5,0);
-	c_matrix[5] = std::complex<double>(0.75,0);
-	c_matrix[6] = std::complex<double>(0.25,0);
-	c_matrix[7] = std::complex<double>(0.25,0);
-	c_matrix[8] = std::complex<double>(0.25,0);
-	printf("Matrix cov\n");
+	//c_matrix[0] = std::complex<double>(2,0);
+	//c_matrix[1] = std::complex<double>(-1,0);
+	//c_matrix[2] = std::complex<double>(-2,0);
+	//c_matrix[3] = std::complex<double>(-4.0,0);
+	//c_matrix[4] = std::complex<double>(6,0);
+	//c_matrix[5] = std::complex<double>(3,0);
+	//c_matrix[6] = std::complex<double>(-4,0);
+	//c_matrix[7] = std::complex<double>(-2,0);
+	//c_matrix[8] = std::complex<double>(8,0);
+
+	std::complex<double>* r_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	std::complex<double>* q_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	householder_reflections(c_matrix, M, q_test, r_test);
+	printf("Q\n");
 	for(int i = 0; i < M; ++i) {
 		for(int j = 0; j < M; ++j) {
-			cout << c_matrix[i*M +j] << " ";
+			cout << setw(20) << setprecision(2) << q_test[i*M +j] << " ";
 		}
 		cout << endl;
 	}
-
-	std::complex<double>* r_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
-	//std::complex<double>* q_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
-	//householder_reflections(c_matrix, M, q_test, r_test);
-	householder_reflections(c_matrix, M, r_test);
-	//printf("Q\n");
-	//for(int i = 0; i < M; ++i) {
-	//	for(int j = 0; j < M; ++j) {
-	//		cout << setw(20) << q_test[i*M +j] << " ";
-	//	}
-	//	cout << endl;
-	//}
 	printf("R\n");
 	for(int i = 0; i < M; ++i) {
 		for(int j = 0; j < M; ++j) {
@@ -96,8 +88,20 @@ int main(){
 		}
 		cout << endl;
 	}
+
+	std::complex<double>* c_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	matrix_mul(q_test, r_test, M, M, M, M, c_test);
+	printf("c\n");
+	for(int i = 0; i < M; ++i) {
+		for(int j = 0; j < M; ++j) {
+			cout << setw(20) << setprecision(2) << c_test[i*M +j] << " ";
+		}
+		cout << endl;
+	}
+
+	free(c_test);
 	free(r_test);
-	//free(r_test);
+	free(q_test);
 
 
 
