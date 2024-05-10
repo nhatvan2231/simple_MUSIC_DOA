@@ -8,23 +8,39 @@
 
 //int qr_decomposition(std::complex<double>* A);
 
-int householder_reflections(std::complex<double>* A, int size, std::complex<double>* &R){
+int householder_reflections(std::complex<double>* A, int size, std::complex<double>* &Q, std::complex<double>* &R){
 	//std::complex<double>* R = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size);
-	//std::complex<double>* tmp_A = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size); 
-	//matrix_copy(A, size, size, tmp_A);
-	matrix_copy(A, size, size, R);
+	std::complex<double>* inputmat = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size); 
+	matrix_copy(A, size, size, inputmat);
+	
+	std::complex<double>* P = (std::complex<double> *)malloc(size*size*(size-1) * sizeof(std::complex<double>));
+	//matrix_copy(A, size, size,0, R);
 	for(int i=0; i<size-1; ++i){
 		std::complex<double>* tmp_A = (std::complex<double> *)calloc(size*size, sizeof(std::complex<double>));
 		std::complex<double>* subA = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size);
-		std::complex<double>* P = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size);
-		get_col(R, size, size, i, subA);
-		identity_mat(size, P); // match the original size of A
-		compute_P(subA, size, i, P);
-		matrix_mul(P, R, size, size, size, size, tmp_A);
-		matrix_copy(tmp_A, size, size, R);
-		free(P);
+		std::complex<double>* tmp_P = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size);
+		get_col(inputmat, size, size, i, subA);
+		identity_mat(size, tmp_P); // match the original size of A
+		compute_P(subA, size, i, tmp_P);
+		matrix_mul(P, inputmat, size, size, size, size, tmp_A);
+		matrix_copy(tmp_A, size, size,0, inputmat);
+		matrix_copy(tmp_P, size, size, size*size*i, P);
+		free(tmp_P);
 		free(subA);
 		free(tmp_A);
+	}
+
+	conj_transpose(P, size, size, Q); // Q is the transform of transpose Ps
+	R = ;
+	for(int i=0; i<size-1; ++i){
+		std::complex<double>* tmp_Q = (std::complex<double> *)calloc(size * size,sizeof(std::complex<double>));
+		std::complex<double>* tmp_R = (std::complex<double> *)calloc(size * size,sizeof(std::complex<double>));
+		std::complex<double>* tmp_P = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size);
+		std::complex<double>* tmp_PT = (std::complex<double> *)malloc(sizeof(std::complex<double>) * size * size);
+		tmp_P = P + i*size*size;
+		conj_transpose(tmp_P, size, size, tmp_PT);
+		matrix_mul(tmp_PT, A, size, size, size, size, tmp_Q);
+
 	}
 	return 0;
 }
