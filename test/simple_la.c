@@ -3,9 +3,9 @@
 using namespace std;
 
 // copy matrix/vector
-int matrix_copy(std::complex<double> *src, int M, int N, int offset, std::complex<double>* &dst){
+int matrix_copy(std::complex<double> *src, int M, int N, std::complex<double>* &dst){
 	for(int i=0; i<M*N; ++i){
-		dst[i + offset] = src[i];
+		dst[i] = src[i];
 	}
 	return 0;
 }

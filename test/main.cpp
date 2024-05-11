@@ -61,47 +61,106 @@ int main(){
 		}
 		cout << endl;
 	}
-	//c_matrix[0] = std::complex<double>(2,0);
-	//c_matrix[1] = std::complex<double>(-1,0);
-	//c_matrix[2] = std::complex<double>(-2,0);
-	//c_matrix[3] = std::complex<double>(-4.0,0);
-	//c_matrix[4] = std::complex<double>(6,0);
-	//c_matrix[5] = std::complex<double>(3,0);
-	//c_matrix[6] = std::complex<double>(-4,0);
-	//c_matrix[7] = std::complex<double>(-2,0);
-	//c_matrix[8] = std::complex<double>(8,0);
-
-	std::complex<double>* r_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
-	std::complex<double>* q_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
-	householder_reflections(c_matrix, M, q_test, r_test);
-	printf("Q\n");
+	c_matrix[0] = std::complex<double>(6,0);
+	c_matrix[1] = std::complex<double>(5.5,0);
+	c_matrix[2] = std::complex<double>(-1,0);
+	c_matrix[3] = std::complex<double>(5.5,0);
+	c_matrix[4] = std::complex<double>(1,0);
+	c_matrix[5] = std::complex<double>(-2,0);
+	c_matrix[6] = std::complex<double>(-1,0);
+	c_matrix[7] = std::complex<double>(-2,0);
+	c_matrix[8] = std::complex<double>(-3,0);
 	for(int i = 0; i < M; ++i) {
 		for(int j = 0; j < M; ++j) {
-			cout << setw(20) << setprecision(2) << q_test[i*M +j] << " ";
-		}
-		cout << endl;
-	}
-	printf("R\n");
-	for(int i = 0; i < M; ++i) {
-		for(int j = 0; j < M; ++j) {
-			cout << setw(20) << r_test[i*M +j] << " ";
+			cout << c_matrix[i*M +j] << " ";
 		}
 		cout << endl;
 	}
 
-	std::complex<double>* c_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
-	matrix_mul(q_test, r_test, M, M, M, M, c_test);
-	printf("c\n");
+	//std::complex<double>* r_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	//std::complex<double>* q_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	//householder_reflections(c_matrix, M, q_test, r_test);
+	//printf("Q\n");
+	//for(int i = 0; i < M; ++i) {
+	//	for(int j = 0; j < M; ++j) {
+	//		cout << setw(20) << setprecision(2) << q_test[i*M +j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+	//printf("R\n");
+	//for(int i = 0; i < M; ++i) {
+	//	for(int j = 0; j < M; ++j) {
+	//		cout << setw(20) << r_test[i*M +j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+
+	//std::complex<double>* c_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	//matrix_mul(r_test, q_test, M, M, M, M, c_test);
+	//printf("c\n");
+	//for(int i = 0; i < M; ++i) {
+	//	for(int j = 0; j < M; ++j) {
+	//		cout << setw(20) << setprecision(5) << c_test[i*M +j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+	//free(r_test);
+	//free(q_test);
+
+	////c_test[3] = std::complex<double>(0,0);
+	////c_test[6] = std::complex<double>(0,0);
+	////c_test[7] = std::complex<double>(0,0);
+
+	//r_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	//q_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+	//householder_reflections(c_test, M, q_test, r_test);
+	//printf("Q\n");
+	//for(int i = 0; i < M; ++i) {
+	//	for(int j = 0; j < M; ++j) {
+	//		cout << setw(20) << setprecision(2) << q_test[i*M +j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+	//printf("R\n");
+	//for(int i = 0; i < M; ++i) {
+	//	for(int j = 0; j < M; ++j) {
+	//		cout << setw(20) << r_test[i*M +j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+
+	//free(c_test);
+	//c_test = (std::complex<double> *)calloc(M*M,sizeof(std::complex<double>));
+
+	//matrix_mul(q_test, r_test, M, M, M, M, c_test);
+	//printf("c\n");
+	//for(int i = 0; i < M; ++i) {
+	//	for(int j = 0; j < M; ++j) {
+	//		cout << setw(20) << setprecision(5) << c_test[i*M +j] << " ";
+	//	}
+	//	cout << endl;
+	//}
+
+	//free(r_test);
+	//free(q_test);
+
+	std::complex<double>* ei_eve_test = (std::complex<double> *)malloc(M*M*sizeof(std::complex<double>));
+	std::complex<double>* ei_val_test = (std::complex<double> *)malloc(M*sizeof(std::complex<double>));
+	eigen_vv(c_matrix, M, ei_eve_test, ei_val_test);
+	printf("eigen vectors\n");
 	for(int i = 0; i < M; ++i) {
 		for(int j = 0; j < M; ++j) {
-			cout << setw(20) << setprecision(2) << c_test[i*M +j] << " ";
+			cout << setw(20) << setprecision(2) << ei_eve_test[i*M +j] << " ";
 		}
 		cout << endl;
 	}
 
-	free(c_test);
-	free(r_test);
-	free(q_test);
+	printf("eigen values\n");
+	for(int i=0; i<M; ++i){
+		cout << ei_val_test[i] << endl;
+	}
+	free(ei_eve_test);
+	free(ei_val_test);
 
 
 
